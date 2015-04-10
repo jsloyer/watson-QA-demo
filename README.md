@@ -21,4 +21,4 @@ The Node.js application has files as below:
 
 *   AI/
 
-This directory contains JS resources that enable communication with our simple and watson AI.
+  This directory contains JS resources that enable communication with our simple and watson AI.
