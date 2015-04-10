@@ -19,6 +19,6 @@ The Node.js application has files as below:
 
 	This directory contains public resources of the application. It contains the CSS and HTML resources. It is required by the express framework in this sample application.
 
-  *   AI/
+*   AI/
 
-  This directory contains JS resources that enable communication with our simple and watson AI.
+This directory contains JS resources that enable communication with our simple and watson AI.
