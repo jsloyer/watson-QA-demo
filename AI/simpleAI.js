@@ -1,15 +1,17 @@
-var path = require('path'),
+//---Module Dependencies--------------------------------------------------------
+var https = require('https'),
 	url = require('url'),
-	https = require('https');
+	path = require('path');
 
-// Handler for /question POST remarks
+//---/question POST Handler-----------------------------------------------------
 // It will return the JSON in the format: {"answer":"<Response>"}
 exports.question = function(req, res)
 {
 	var question = req.body.question;
-	var response;
+	console.log('Question from chat: ' + question);
 
 	//Simple responses based on keywords
+	var response;
 	if (question) {
 		if (question.toLowerCase().indexOf("what") >= 0) {
 			response = "You should walk around and converse with the locals.";
@@ -33,6 +35,8 @@ exports.question = function(req, res)
 		response = "I do not know the answer.";
 	}
 
+	// Format answer output
+	console.log("Answer to question: " + response);
 	var output = '{"answer":"'+ response + '"}';
 	var answers = JSON.parse(output);
 	res.json(answers);

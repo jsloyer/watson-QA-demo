@@ -1,0 +1,16 @@
+{
+  "services": {
+    "question_and_answer": [
+      {
+        "name": "Watson_Question_Answer",
+        "label": "question_and_answer",
+        "plan": "question_and_answer_free_plan",
+        "credentials": {
+          "url": "https://gateway.watsonplatform.net/question-and-answer-beta/api",
+          "username": "YOUR_USER_NAME",
+          "password": "YOUR_PW"
+        }
+      }
+    ]
+  }
+}

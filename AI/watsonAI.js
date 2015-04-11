@@ -1,46 +1,37 @@
-var path = require('path'),
-	url = require('url'),
-	https = require('https');
+//---Module Dependencies--------------------------------------------------------
+var https = require('https'),
+  url = require('url'),
+  path = require('path'),
+  cfenv = require('cfenv');
 
-// Handler for /question POST remarks
+//---/question POST Handler-----------------------------------------------------
 // It will return the JSON in the format: {"answer":"<Response>"}
 exports.question = function(req, res)
 {
 	//Get the environment variable for the service
-	var VCAP_SERVICES;
-	var password;
-	var username;
-	var watson_url;
-
-	try
-	{
-		VCAP_SERVICES = JSON.parse(process.env.VCAP_SERVICES);
-		password = VCAP_SERVICES['question_and_answer'][0].credentials.password;
-		username = VCAP_SERVICES['question_and_answer'][0].credentials.username;
-		watson_url = VCAP_SERVICES['question_and_answer'][0].credentials.url;
+	var vcapLocal = null
+	try {
+	  vcapLocal = require("../vcap-local.json");
 	}
-	catch(err)
-	{
-		throw 'Could not load Watson QAAPI service';
-	}
+	catch (e) {}
 
-	// Set up the communication to the Watson for Travel API
-	var parts = url.parse(watson_url + '/v1/question/travel');
+	var appEnvOpts = vcapLocal ? {vcap:vcapLocal} : {}
+	var watson = getWatsonQAServiceCreds(cfenv.getAppEnv(appEnvOpts));
 
-	var headers =
-	{
+//---Set up the communication to the Watson for Travel API----------------------
+	var parts = url.parse(watson.url + '/v1/question/travel');
+
+	var headers = {
 		'Content-Type' : 'application/json',
 		'X-synctimeout' : '30',
-		'Authorization' : "Basic " + new Buffer(username+':'+password).toString('base64')
+		'Authorization' : "Basic " + new Buffer(watson.username + ':' + watson.password).toString('base64')
 	};
 
-	// Get the question from the requesting page. The question id (the question text box) will be obtained
+//---Get question from request page---------------------------------------------
 	var question = req.body.question;
-
 	console.log('Question from chat: ' + question);
 
-	var options = 
-	{
+	var options = {
 		host: parts.hostname,
 		port: 443,
 		path: parts.pathname,
@@ -53,7 +44,7 @@ exports.question = function(req, res)
 
 	var output = '';
 
-	//Create a request to POST to Watson
+//---Create a request to POST to Watson-----------------------------------------
 	var req = https.request(options, function(result)
 	{
 		result.on('data', function(chunk)
@@ -73,6 +64,7 @@ exports.question = function(req, res)
 				var myResponse = JSON.parse(modifiedOutput);
 
 				//Provide a response back
+				console.log("Answer to question: " + answers[0].question.evidencelist[0].text);
 				res.json(myResponse);
 			}
 			catch (err)
@@ -99,3 +91,16 @@ exports.question = function(req, res)
 	req.write(JSON.stringify(questionToWatson));
 	req.end();
 };
+
+//---Server Functions-----------------------------------------------------------
+// Ensures a Watson QA service is found in VCAPS
+// If found, returns the service credentials
+function getWatsonQAServiceCreds(appEnv) {
+  var serviceCreds = appEnv.getServiceCreds("Watson_Question_Answer")
+  if (!serviceCreds) {
+    console.log("Watson QA service not bound to this application");
+    return null;
+  }
+
+  return serviceCreds;
+}

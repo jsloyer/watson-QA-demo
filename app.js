@@ -1,37 +1,36 @@
-/**
- * Module dependencies.
- */
+//---Module Dependencies--------------------------------------------------------
+var express = require('express'),
+  bodyParser     = require("body-parser"),
+  methodOverride = require("method-override"),
+  app = express(),
+  http = require('http'),
+  url = require('url'),
+  path = require('path'),
+  cfenv = require('cfenv');
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
-
-var app = express();
-
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+//---Routers and View Engine----------------------------------------------------
 app.use(express.favicon());
-app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
-if ('development' == app.get('env')) {
+//---App Env-----------------------------------------------------------
+var appEnv = cfenv.getAppEnv();
+
+// If dev, turn on error handler
+if (appEnv.isLocal) {
   app.use(express.errorHandler());
 }
 
+//---Handle HTTP Requests-------------------------------------------------------
 app.use("/", express.static(__dirname + '/public'));
-app.get('/users', user.list);
 
 var watsonAI = require('./AI/watsonAI');
 app.post('/question', watsonAI.question);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+//---Start HTTP Server----------------------------------------------------------
+var server = http.Server(app);
+server.listen(appEnv.port, function() {
+    console.log("server started on port " + appEnv.port);
 });
