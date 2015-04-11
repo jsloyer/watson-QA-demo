@@ -2,10 +2,16 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-	<title>Ask Watson</title>
+	<title>Watson Travel Chat</title>
 </head>
 <body>
+	<div class="jumbotron">
+	  <div class="header-text">
+	    <h1>Watson Travel Chat</h1>
+	  </div>
+	</div><!-- /.jumbotron -->	<br>
 	<p><b>Ask a question like the following:</b></p>
 
 	<ul>
@@ -18,15 +24,23 @@
 		<li>
 			<p> "Can I bring my <i>X</i> through airport security?"</p>
 		</li>
+		<li>
+			<p> "What should I do while in <i>X</i>?"</p>
+		</li>
 	</ul>
-
-	<div id="output"></div>
-	<div class="askContent">
-		<input type="text" id="question" class="textbox" value=""/>
-		<input type="button" class="askButton" value="ASK" onclick="ask()"/>
+	<div class="container-fluid">
+		<div id="output"></div>
+		<br>
+		<div class="row">
+			<fieldset class="askContent">
+				<input type="text" id="question" class="textbox col-md-8">
+				<button type="button" class="btn btn-primary btn-med col-md-1" onclick="ask()">ASK</button>
+			</fieldset>
+		</div>
 	</div>
 
-	<script src="jquery/jquery-1.11.2.min.js"></script>
+	<script src="libraries/jquery-1.11.2.min.js"></script>
+	<script src="libraries/bootstrap.min.js"></script>
 	<script>
 		// Set focus to the question box
 		document.getElementById("question").focus();
@@ -40,15 +54,29 @@
 
 		// Displays a formatted question or answer to the page
 		function showOutput(classType, output) {
-			var elementSeparator = document.createElement('div');
-			elementSeparator.setAttribute('class', classType);
-			elementSeparator.innerHTML = output;
-			document.getElementById('output').appendChild(elementSeparator);
 
-			var elementSeparator = document.createElement('div');
-			elementSeparator.setAttribute('class', 'messageSeparator');
-			elementSeparator.innerHTML = '&nbsp';
-			document.getElementById('output').appendChild(elementSeparator);
+			// Establish classes for new elements
+			var columnClass;
+			if (classType === "questionContent") {
+				columnClass = " col-md-6";
+				classType += " left";
+			}
+			else {
+				columnClass = " col-md-offset-6 col-md-6";
+				classType += " right";
+			}
+
+			// Create HTML element for displaying question/answer
+			var row = document.createElement('div');
+			row.setAttribute('class', "row");
+			document.getElementById('output').appendChild(row);
+			var column = document.createElement('div');
+			column.setAttribute('class', columnClass);
+			row.appendChild(column);
+			var text = document.createElement('div');
+			text.setAttribute('class', classType);
+			text.innerHTML = output;
+			column.appendChild(text);
 		}
 
 		// Posts a question to the url: /question and processes the answer
@@ -77,7 +105,7 @@
 						$('html, body').animate({ scrollTop : $(document).height() }, 'slow');
 					}
 					else {
-						console.log('The respoonse back was undefined');
+						console.log('The response back was undefined');
 						showOutput('answerContent', 'Sorry, I have no response to your question.');
 					}
 				},

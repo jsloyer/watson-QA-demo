@@ -96,7 +96,7 @@ exports.question = function(req, res)
 // Ensures a Watson QA service is found in VCAPS
 // If found, returns the service credentials
 function getWatsonQAServiceCreds(appEnv) {
-  var serviceCreds = appEnv.getServiceCreds("Watson_Question_Answer")
+  var serviceCreds = appEnv.getServiceCreds("Watson_Question_Answer");
   if (!serviceCreds) {
     console.log("Watson QA service not bound to this application");
     return null;

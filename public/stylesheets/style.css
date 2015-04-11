@@ -1,24 +1,181 @@
-.textbox
-{
-	width: 680px;
-	padding: 5px;
+html, body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.askButton
-{
-	width: 100px;
-	background-color: #3b4b54;
+p {
+	padding-left: 5px;
+}
+
+.jumbotron {
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  background-color: #1d3649;
+  color: white;
+  width: 100%;
+}
+
+.header-text{
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  padding-left: 10px;
+  text-align: left;
+}
+
+
+.questionContent {
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  border:5px solid #5aaafa;
+  color:#333;
+  background:#fff;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+.questionContent:before {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:40px; /* controls horizontal position */
+  border-width:20px 20px 0;
+  border-style:solid;
+  border-color:#5aaafa transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* creates the smaller  triangle */
+.questionContent:after {
+  content:"";
+  position:absolute;
+  bottom:-13px; /* value = - border-top-width - border-bottom-width */
+  left:47px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+  border-width:13px 13px 0;
+  border-style:solid;
+  border-color:#fff transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+.questionContent.left {
+  margin-left:30px;
+}
+
+/* creates the larger triangle */
+.questionContent.left:before {
+  top:10px; /* controls vertical position */
+  bottom:auto;
+  left:-30px; /* value = - border-left-width - border-right-width */
+  border-width:15px 30px 15px 0;
+  border-color:transparent #5aaafa;
+}
+
+/* creates the smaller  triangle */
+.questionContent.left:after {
+  top:16px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+  bottom:auto;
+  left:-21px; /* value = - border-left-width - border-right-width */
+  border-width:9px 21px 9px 0;
+  border-color:transparent #fff;
+}
+
+.answerContent {
+  position:relative;
+  padding:15px;
+  margin:1em 0 3em;
+  border:5px solid #41d6c3;
+  color:#333;
+  background:#fff;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+.answerContent:before {
+  content:"";
+  position:absolute;
+  bottom:-20px; /* value = - border-top-width - border-bottom-width */
+  left:40px; /* controls horizontal position */
+  border-width:20px 20px 0;
+  border-style:solid;
+  border-color:#41d6c3 transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+/* creates the smaller  triangle */
+.answerContent:after {
+  content:"";
+  position:absolute;
+  bottom:-13px; /* value = - border-top-width - border-bottom-width */
+  left:47px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+  border-width:13px 13px 0;
+  border-style:solid;
+  border-color:#fff transparent;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+.answerContent.right {
+  margin-right:30px;
+}
+
+/* creates the larger triangle */
+.answerContent.right:before {
+  top:10px; /* controls vertical position */
+  bottom:auto;
+  left:auto;
+  right:-30px; /* value = - border-left-width - border-right-width */
+  border-width:15px 0 15px 30px;
+  border-color:transparent #41d6c3;
+}
+
+/* creates the smaller  triangle */
+.answerContent.right:after {
+  top:16px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+  bottom:auto;
+  left:auto;
+  right:-21px; /* value = - border-left-width - border-right-width */
+  border-width:9px 0 9px 21px;
+  border-color:transparent #fff;
+}
+
+.askContent {
+	background-color: #41d6c3;
+	padding: 20px;
+}
+
+.textbox {
+	min-width: 360px;
+	padding: 5px;
+	margin-right: 10px;
+}
+
+.btn {
+	background-color: #1d3649;
 	color: #ffffff;
 	font-weight: bold;
 	border-radius: 0;
-	display: inline-block;
 	border: none;
 	outline: none;
-	padding: 7px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
-.askButton:hover
-{
-	background-color: #00b2EF;
+.btn:hover {
+	background-color: #5aaafa;
 	color: #ffffff;
 }
