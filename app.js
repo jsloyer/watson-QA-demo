@@ -26,9 +26,6 @@ if (appEnv.isLocal) {
 //---Handle HTTP Requests-------------------------------------------------------
 app.get('/', routes.index);
 
-var simpleAI = require('./AI/simpleAI');
-app.post('/question', simpleAI.question);
-
 //---Start HTTP Server----------------------------------------------------------
 var server = http.Server(app);
 server.listen(appEnv.port, function() {
