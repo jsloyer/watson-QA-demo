@@ -24,10 +24,10 @@ if (appEnv.isLocal) {
 }
 
 //---Handle HTTP Requests-------------------------------------------------------
-app.use("/", express.static(__dirname + '/public'));
+app.get('/', routes.index);
 
-var watsonAI = require('./AI/watsonAI');
-app.post('/question', watsonAI.question);
+var simpleAI = require('./AI/simpleAI');
+app.post('/question', simpleAI.question);
 
 //---Start HTTP Server----------------------------------------------------------
 var server = http.Server(app);
