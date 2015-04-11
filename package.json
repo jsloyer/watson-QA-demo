@@ -10,7 +10,6 @@
     "jade": "*",
     "body-parser": "*",
     "method-override": "*",
-    "cfenv": "*",
-    "request": "*"
+    "cfenv": "*"
   }
 }
