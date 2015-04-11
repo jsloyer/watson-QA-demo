@@ -13,19 +13,20 @@ exports.question = function(req, res)
 	//Simple responses based on keywords
 	var response;
 	if (question) {
-		if (question.toLowerCase().indexOf("what") >= 0) {
+		var questionLC = question.toLowerCase();
+		if (questionLC.indexOf("what") >= 0) {
 			response = "You should walk around and converse with the locals.";
 		}
-		else if (question.toLowerCase().indexOf("where") >= 0) {
+		else if (questionLC.indexOf("where") >= 0) {
 			response = "Go where your heart tells you to go.";
 		}
-		else if (question.toLowerCase().indexOf("safe") >= 0) {
+		else if (questionLC.indexOf("safe") >= 0) {
 			response = "It is not safe. Get far away!";
 		}
-		else if (question.toLowerCase().indexOf("ferry") >= 0) {
+		else if (questionLC.indexOf("ferry") >= 0) {
 			response = "No such ferry exists.";
 		}
-		else if (question.toLowerCase().indexOf("airport") >= 0) {
+		else if (questionLC.indexOf("airport") >= 0) {
 			response = "Do not bring anything on the airplane.";
 		}
 	}
